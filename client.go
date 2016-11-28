@@ -36,7 +36,7 @@ func Log(table string, logData *LogData) error {
 	for k, v := range *logData {
 		logQuery.Add(k, v)
 	}
-	res, err := http.PostForm(fmt.Sprintf("%s/log/%s", logAddr, table), logQuery)
+	res, err := http.PostForm(fmt.Sprintf("%s/%s", logAddr, table), logQuery)
 	if err != nil {
 		return err
 	}

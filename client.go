@@ -28,14 +28,15 @@ func Use(addrToUse string) {
 	logAddr = serverAddr + "log"
 }
 
-// Log accepts a logData, then it logs and if it rails it returns an error
-// Pretty simple, but abstracting is a nice thing
-func Log(logData *LogData) error {
+// Log accepts a logData, then it logs and if it fails it returns an error
+// table - The table to log to.
+// logData - Is the actual data to log, in key-value
+func Log(table string, logData *LogData) error {
 	logQuery := url.Values{}
 	for k, v := range *logData {
 		logQuery.Add(k, v)
 	}
-	res, err := http.PostForm(logAddr, logQuery)
+	res, err := http.PostForm(fmt.Sprintf("%s/%s/", logAddr, table), logQuery)
 	if err != nil {
 		return err
 	}
